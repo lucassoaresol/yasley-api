@@ -17,7 +17,7 @@ export const verifyUserIsAuthenticated = async (
   authorization = authorization.split(' ')[1]
 
   jwt.verify(authorization, env.SECRET_KEY, (error, decoded: any) => {
-    if (error) throw new AppError(error.message, 400)
+    if (error) throw new AppError(error.message, 403)
 
     req.user = {
       id: decoded.sub,
