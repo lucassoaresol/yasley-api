@@ -1,15 +1,15 @@
-import jwt from 'jsonwebtoken'
 import { compareSync } from 'bcryptjs'
 import { AppError } from '../../errors'
 import { prisma } from '../../lib'
 import { ISessionRequest } from '../../interfaces'
-import { env } from '../../env'
+import { refreshSessionService } from './refreshSession.service'
 
 export const createSessionService = async ({
   login,
   password,
 }: ISessionRequest): Promise<{
   token: string
+  refresh_token: string
 }> => {
   const user = await prisma.user.findUnique({
     where: { login },
@@ -26,10 +26,5 @@ export const createSessionService = async ({
       401,
     )
 
-  const token = jwt.sign({ role: user.role }, env.SECRET_KEY, {
-    subject: user.id,
-    expiresIn: '7d',
-  })
-
-  return { token }
+  return refreshSessionService(user.id)
 }

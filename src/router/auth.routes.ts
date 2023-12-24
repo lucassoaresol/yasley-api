@@ -5,6 +5,7 @@ import {
 } from '../middlewares'
 import {
   createSessionController,
+  refreshSessionController,
   sendEmailToRecovery,
   updatePasswordController,
   verifyController,
@@ -23,6 +24,10 @@ sessionRouter.post(
   validateSchemaMiddleware(SessionSchema),
   createSessionController,
 )
+
+export const tokenRouter = Router()
+
+tokenRouter.post('', verifyUserIsAuthenticated, refreshSessionController)
 
 export const passwordRouter = Router()
 

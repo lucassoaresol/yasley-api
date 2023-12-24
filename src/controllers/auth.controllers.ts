@@ -1,14 +1,21 @@
 import { Request, Response } from 'express'
 import {
-  updatePasswordService,
-  sendEmailRecoveryService,
   createSessionService,
-  verifyService,
+  refreshSessionService,
+  sendEmailRecoveryService,
+  updatePasswordService,
   verifyPasswordService,
+  verifyService,
 } from '../services'
 
 export const createSessionController = async (req: Request, res: Response) => {
   const token = await createSessionService(req.body)
+
+  return res.status(201).json(token)
+}
+
+export const refreshSessionController = (req: Request, res: Response) => {
+  const token = refreshSessionService(req.user.id)
 
   return res.status(201).json(token)
 }

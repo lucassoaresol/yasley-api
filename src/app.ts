@@ -12,6 +12,7 @@ import {
   schoolRouter,
   sessionRouter,
   studentRouter,
+  tokenRouter,
   userRouter,
   verifyRouter,
 } from './router'
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 
 app.use('/users', userRouter)
 app.use('/login', sessionRouter)
+app.use('/token', tokenRouter)
 app.use('/password', passwordRouter)
 app.use('/schools', schoolRouter)
 app.use('/classes', classRouter)
