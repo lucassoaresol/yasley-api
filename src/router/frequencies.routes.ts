@@ -16,8 +16,6 @@ import {
 } from '../controllers'
 import {
   validateSchemaMiddleware,
-  verifyIsAdmin,
-  verifyIsPermission,
   verifyUserIsAuthenticated,
 } from '../middlewares'
 import {
@@ -49,7 +47,6 @@ frequencyRouter.get('', verifyUserIsAuthenticated, listFrequencyController)
 frequencyRouter.get(
   '/error',
   verifyUserIsAuthenticated,
-  verifyIsAdmin,
   listFrequencyErrorController,
 )
 
@@ -68,7 +65,6 @@ frequencyRouter.get(
 frequencyRouter.get(
   '/resume/:year_id/:school_id',
   verifyUserIsAuthenticated,
-  verifyIsPermission,
   resumeFrequencySchoolController,
 )
 

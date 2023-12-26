@@ -6,8 +6,6 @@ export const userReturn = async (user: IUserReturn, school_id = '') => {
     const work_school = await prisma.schoolServer.findUnique({
       where: { school_id_server_id: { school_id, server_id: user.id } },
       select: {
-        dash: true,
-        role: true,
         school: { select: { id: true, name: true } },
       },
     })

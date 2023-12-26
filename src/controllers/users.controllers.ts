@@ -15,7 +15,7 @@ import {
 } from '../services'
 
 export const createUserController = async (req: Request, res: Response) => {
-  const user = await createUserService(req.body, req.query)
+  const user = await createUserService(req.body)
   return res.status(201).json(user)
 }
 
@@ -68,7 +68,7 @@ export const dashUserController = async (req: Request, res: Response) => {
 }
 
 export const updateUserController = async (req: Request, res: Response) => {
-  const user = await updateUserService(req.params.id, req.body, req.user.role)
+  const user = await updateUserService(req.params.id, req.body)
   return res.json(user)
 }
 

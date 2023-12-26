@@ -1,10 +1,7 @@
-import { IDash, IRole } from '../../interfaces'
 import { schoolReturn } from './schoolReturn'
 
 const schoolServerReturn = async (
   schoolServer: {
-    role: IRole
-    dash: IDash
     school: {
       id: string
     }
@@ -12,7 +9,7 @@ const schoolServerReturn = async (
   year_id?: string,
   date?: string,
 ) => {
-  const { dash, role, school } = schoolServer
+  const { school } = schoolServer
 
   const schoolClass = await schoolReturn(
     school.id,
@@ -22,13 +19,11 @@ const schoolServerReturn = async (
     date,
   )
 
-  return { dash, role, school: schoolClass }
+  return { school: schoolClass }
 }
 
 export const schoolServerArrayReturn = async (
   schools: {
-    role: IRole
-    dash: IDash
     school: {
       id: string
     }

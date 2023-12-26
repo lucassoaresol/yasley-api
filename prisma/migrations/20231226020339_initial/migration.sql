@@ -1,10 +1,4 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('SERV', 'DIRET', 'SECRET', 'ADMIN');
-
--- CreateEnum
-CREATE TYPE "Dash" AS ENUM ('COMMON', 'SCHOOL', 'ORGAN', 'ADMIN');
-
--- CreateEnum
 CREATE TYPE "StatusStudent" AS ENUM ('PRESENTED', 'MISSED', 'JUSTIFIED');
 
 -- CreateEnum
@@ -18,9 +12,6 @@ CREATE TABLE "users" (
     "login" VARCHAR(128) NOT NULL,
     "password" VARCHAR(128) NOT NULL,
     "cpf" VARCHAR(14) NOT NULL,
-    "role" "Role" NOT NULL DEFAULT 'SERV',
-    "dash" "Dash" NOT NULL DEFAULT 'COMMON',
-    "is_super" BOOLEAN NOT NULL DEFAULT false,
     "is_active" BOOLEAN NOT NULL DEFAULT true,
     "is_first_access" BOOLEAN NOT NULL DEFAULT true,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -121,8 +112,6 @@ CREATE TABLE "school_server" (
     "key" TEXT NOT NULL,
     "school_id" TEXT NOT NULL,
     "server_id" TEXT NOT NULL,
-    "role" "Role" NOT NULL DEFAULT 'SERV',
-    "dash" "Dash" NOT NULL DEFAULT 'COMMON',
 
     CONSTRAINT "school_server_pkey" PRIMARY KEY ("school_id","server_id")
 );

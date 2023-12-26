@@ -14,7 +14,6 @@ import {
 } from '../controllers'
 import {
   validateSchemaMiddleware,
-  verifyIsAdmin,
   verifyUserIsAuthenticated,
 } from '../middlewares'
 import { UserCreateSchema, UserUpdateRequestSchema } from '../schemas'
@@ -27,7 +26,7 @@ userRouter.post(
   createUserController,
 )
 
-userRouter.get('', verifyUserIsAuthenticated, verifyIsAdmin, listUserController)
+userRouter.get('', verifyUserIsAuthenticated, listUserController)
 
 userRouter.get('/page', verifyUserIsAuthenticated, pageUserController)
 
@@ -54,9 +53,4 @@ userRouter.patch(
   updateUserController,
 )
 
-userRouter.delete(
-  '/:id',
-  verifyUserIsAuthenticated,
-  verifyIsAdmin,
-  deleteUserController,
-)
+userRouter.delete('/:id', verifyUserIsAuthenticated, deleteUserController)

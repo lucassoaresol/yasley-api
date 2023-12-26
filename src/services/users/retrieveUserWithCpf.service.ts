@@ -8,7 +8,7 @@ export const retrieveUserWithCpfService = async (
 ) => {
   const user = await prisma.user.findUnique({
     where: { login },
-    select: { name: true, role: true },
+    select: { name: true },
   })
 
   if (school_id) {
@@ -17,14 +17,12 @@ export const retrieveUserWithCpfService = async (
         where: {
           server: { login },
           school_id,
-          role: 'DIRET',
         },
       })
 
       if (!user) return { name: '' }
 
-      if (server || user.role === 'ADMIN')
-        throw new AppError('user already exists', 409)
+      if (server) throw new AppError('user already exists', 409)
 
       return user
     }
@@ -38,16 +36,13 @@ export const retrieveUserWithCpfService = async (
 
     if (!user) return { name: '' }
 
-    if (server || user.role === 'ADMIN')
-      throw new AppError('user already exists', 409)
+    if (server) throw new AppError('user already exists', 409)
 
     return user
   }
 
   if (director) {
     if (!user) return { name: '' }
-
-    if (user.role === 'ADMIN') throw new AppError('user already exists', 409)
 
     return user
   }

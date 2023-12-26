@@ -21,7 +21,6 @@ export const verifyUserIsAuthenticated = async (
 
     req.user = {
       id: decoded.sub,
-      role: decoded.role,
     }
   })
 

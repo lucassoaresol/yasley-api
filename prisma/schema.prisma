@@ -10,20 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  SERV
-  DIRET
-  SECRET
-  ADMIN
-}
-
-enum Dash {
-  COMMON
-  SCHOOL
-  ORGAN
-  ADMIN
-}
-
 enum StatusStudent {
   PRESENTED
   MISSED
@@ -43,9 +29,6 @@ model User {
   login           String         @unique @db.VarChar(128)
   password        String         @db.VarChar(128)
   cpf             String         @unique @db.VarChar(14)
-  role            Role           @default(SERV)
-  dash            Dash           @default(COMMON)
-  is_super        Boolean        @default(false)
   is_active       Boolean        @default(true)
   is_first_access Boolean        @default(true)
   created_at      DateTime       @default(now())
@@ -163,8 +146,6 @@ model SchoolServer {
   school_id String
   server    User   @relation(fields: [server_id], references: [id], onDelete: Cascade)
   server_id String
-  role      Role   @default(SERV)
-  dash      Dash   @default(COMMON)
 
   @@id([school_id, server_id])
   @@map("school_server")

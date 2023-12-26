@@ -20,8 +20,6 @@ export const retrieveUserService = async (
       prisma.schoolServer.findUnique({
         where: { school_id_server_id: { school_id, server_id: id } },
         select: {
-          dash: true,
-          role: true,
           school: { select: { id: true, name: true } },
         },
       }),

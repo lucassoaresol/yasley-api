@@ -4,15 +4,7 @@ import { UserArraySchema } from '../../schemas'
 import { userReturnArray } from '../../scripts'
 
 export const listUserService = async (
-  {
-    role,
-    is_active,
-    isNot_director_school,
-    take,
-    skip,
-    name,
-    school_id,
-  }: IUserQuery,
+  { is_active, isNot_director_school, take, skip, name, school_id }: IUserQuery,
   id: string,
 ) => {
   if (take) take = +take
@@ -21,8 +13,6 @@ export const listUserService = async (
   let where = {}
 
   if (name) where = { ...where, name: { contains: name, mode: 'insensitive' } }
-
-  if (role) where = { ...where, role }
 
   if (school_id) where = { ...where, work_school: { some: { school_id } } }
 
