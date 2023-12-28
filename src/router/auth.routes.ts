@@ -8,7 +8,6 @@ import {
   refreshSessionController,
   sendEmailToRecovery,
   updatePasswordController,
-  verifyController,
   verifyPasswordController,
 } from '../controllers'
 import {
@@ -43,13 +42,9 @@ passwordRouter.post(
   updatePasswordController,
 )
 
-export const verifyRouter = Router()
-
-verifyRouter.post(
-  '/password',
+passwordRouter.post(
+  '/verify',
   verifyUserIsAuthenticated,
   validateSchemaMiddleware(PasswordUpdateSchema),
   verifyPasswordController,
 )
-
-verifyRouter.get('', verifyUserIsAuthenticated, verifyController)

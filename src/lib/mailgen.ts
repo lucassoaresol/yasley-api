@@ -5,8 +5,8 @@ export const mailGenerator = new Mailgen({
   theme: 'cerberus',
 
   product: {
-    // logo: "",
-    name: 'EM Techs',
+    logo: `${env.BASE_URL}/ logo.webp`,
+    name: 'Engercon Engenharia',
     link: env.BASE_URL,
   },
 })

@@ -61,7 +61,7 @@ export const sendEmailRecoveryService = async ({
         action: {
           instructions: 'Clique no botão abaixo para redefinir sua senha:',
           button: {
-            color: '#006CBE',
+            color: '#102635',
             text: 'Redefina sua senha',
             link,
           },

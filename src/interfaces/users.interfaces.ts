@@ -6,8 +6,14 @@ import {
 } from '../schemas'
 import { IQuery } from './global.interfaces'
 
+export type IRole = 'ADMIN' | 'SERV' | 'DIRET' | 'SECRET'
+
+export type IDash = 'COMMON' | 'SCHOOL' | 'ORGAN' | 'ADMIN'
+
 export interface IRequestUser {
   id: string
+  is_super: boolean
+  is_worker: boolean
 }
 
 export interface IUser {
@@ -23,6 +29,7 @@ export type IUserRequest = z.infer<typeof UserCreateSchema>
 export type IUserUpdateRequest = z.infer<typeof UserUpdateRequestSchema>
 
 export interface IUserQuery extends IQuery {
+  role?: IRole
   isNot_director_school?: 'true' | 'false'
   allNotServ?: 'true' | 'false'
   director?: 'true' | 'false'

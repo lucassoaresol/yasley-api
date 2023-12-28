@@ -1,10 +1,9 @@
 import { IUserQuery } from '../../interfaces'
 import { prisma } from '../../lib'
 import { UserArraySchema } from '../../schemas'
-import { userReturnArray } from '../../scripts'
 
 export const listUserService = async (
-  { is_active, isNot_director_school, take, skip, name, school_id }: IUserQuery,
+  { is_active, take, skip, name }: IUserQuery,
   id: string,
 ) => {
   if (take) take = +take
@@ -13,8 +12,6 @@ export const listUserService = async (
   let where = {}
 
   if (name) where = { ...where, name: { contains: name, mode: 'insensitive' } }
-
-  if (school_id) where = { ...where, work_school: { some: { school_id } } }
 
   if (is_active) {
     switch (is_active) {
@@ -27,8 +24,6 @@ export const listUserService = async (
         break
     }
   }
-
-  if (isNot_director_school) where = { ...where, director_school: { none: {} } }
 
   where = { ...where, NOT: { id } }
 
@@ -45,10 +40,8 @@ export const listUserService = async (
     }),
   ])
 
-  const result = UserArraySchema.parse(await userReturnArray(users, school_id))
-
   return {
     total,
-    result,
+    result: UserArraySchema.parse(users),
   }
 }

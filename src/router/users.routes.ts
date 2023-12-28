@@ -1,12 +1,8 @@
 import { Router } from 'express'
 import {
   createUserController,
-  dashUserController,
   deleteUserController,
-  exportUserController,
   listUserController,
-  listWorkSchoolController,
-  pageUserController,
   profileUserController,
   retrieveUserController,
   retrieveUserWithCpfController,
@@ -14,6 +10,8 @@ import {
 } from '../controllers'
 import {
   validateSchemaMiddleware,
+  verifyIsSuper,
+  verifyIsWorker,
   verifyUserIsAuthenticated,
 } from '../middlewares'
 import { UserCreateSchema, UserUpdateRequestSchema } from '../schemas'
@@ -23,26 +21,28 @@ export const userRouter = Router()
 userRouter.post(
   '',
   validateSchemaMiddleware(UserCreateSchema),
+  (req, res, next) => {
+    if (req.headers.authorization)
+      return verifyUserIsAuthenticated(req, res, next)
+    return next()
+  },
   createUserController,
 )
 
-userRouter.get('', verifyUserIsAuthenticated, listUserController)
-
-userRouter.get('/page', verifyUserIsAuthenticated, pageUserController)
+userRouter.get(
+  '',
+  verifyUserIsAuthenticated,
+  verifyIsWorker,
+  listUserController,
+)
 
 userRouter.get('/profile', verifyUserIsAuthenticated, profileUserController)
-
-userRouter.get('/export', verifyUserIsAuthenticated, exportUserController)
-
-userRouter.get('/schools', verifyUserIsAuthenticated, listWorkSchoolController)
 
 userRouter.get(
   '/cpf/:cpf',
   verifyUserIsAuthenticated,
   retrieveUserWithCpfController,
 )
-
-userRouter.get('/dash/:year_id', verifyUserIsAuthenticated, dashUserController)
 
 userRouter.get('/:id', verifyUserIsAuthenticated, retrieveUserController)
 
@@ -53,4 +53,9 @@ userRouter.patch(
   updateUserController,
 )
 
-userRouter.delete('/:id', verifyUserIsAuthenticated, deleteUserController)
+userRouter.delete(
+  '/:id',
+  verifyUserIsAuthenticated,
+  verifyIsSuper,
+  deleteUserController,
+)

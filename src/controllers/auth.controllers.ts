@@ -1,11 +1,10 @@
 import { Request, Response } from 'express'
 import {
-  createSessionService,
-  refreshSessionService,
-  sendEmailRecoveryService,
   updatePasswordService,
+  sendEmailRecoveryService,
+  createSessionService,
   verifyPasswordService,
-  verifyService,
+  refreshSessionService,
 } from '../services'
 
 export const createSessionController = async (req: Request, res: Response) => {
@@ -15,7 +14,7 @@ export const createSessionController = async (req: Request, res: Response) => {
 }
 
 export const refreshSessionController = (req: Request, res: Response) => {
-  const token = refreshSessionService(req.user.id)
+  const token = refreshSessionService(req.user)
 
   return res.status(201).json(token)
 }
@@ -34,12 +33,6 @@ export const sendEmailToRecovery = async (req: Request, res: Response) => {
   const user = await sendEmailRecoveryService(req.body)
 
   return res.status(200).json(user)
-}
-
-export const verifyController = async (req: Request, res: Response) => {
-  const verify = await verifyService(req.user, req.query)
-
-  return res.json(verify)
 }
 
 export const verifyPasswordController = async (req: Request, res: Response) => {

@@ -2,19 +2,11 @@ import 'express-async-errors'
 import express from 'express'
 import { errorHandler } from './errors'
 import {
-  calendarRouter,
-  classRouter,
-  frequencyRouter,
   imageRouter,
-  importRouter,
-  infrequencyRouter,
   passwordRouter,
-  schoolRouter,
   sessionRouter,
-  studentRouter,
   tokenRouter,
   userRouter,
-  verifyRouter,
 } from './router'
 
 const app = express()
@@ -33,14 +25,6 @@ app.use('/users', userRouter)
 app.use('/login', sessionRouter)
 app.use('/token', tokenRouter)
 app.use('/password', passwordRouter)
-app.use('/schools', schoolRouter)
-app.use('/classes', classRouter)
-app.use('/students', studentRouter)
-app.use('/frequencies', frequencyRouter)
-app.use('/infrequencies', infrequencyRouter)
-app.use('/calendar', calendarRouter)
-app.use('/imports', importRouter)
-app.use('/verify', verifyRouter)
 app.use('/images', imageRouter)
 
 app.use(errorHandler)

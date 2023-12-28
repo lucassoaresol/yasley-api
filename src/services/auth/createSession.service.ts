@@ -1,7 +1,7 @@
 import { compareSync } from 'bcryptjs'
 import { AppError } from '../../errors'
-import { prisma } from '../../lib'
 import { ISessionRequest } from '../../interfaces'
+import { prisma } from '../../lib'
 import { refreshSessionService } from './refreshSession.service'
 
 export const createSessionService = async ({
@@ -26,5 +26,5 @@ export const createSessionService = async ({
       401,
     )
 
-  return refreshSessionService(user.id)
+  return refreshSessionService(user)
 }
