@@ -1,3 +1,7 @@
 export * from './auth.interfaces'
+export * from './categories.interfaces'
+export * from './clients.interfaces'
+export * from './costs.interfaces'
 export * from './global.interfaces'
+export * from './providers.interfaces'
 export * from './users.interfaces'

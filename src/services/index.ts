@@ -1,3 +1,7 @@
 export * from './auth'
+export * from './categories'
+export * from './clients'
+export * from './costs'
 export * from './images'
+export * from './providers'
 export * from './users'

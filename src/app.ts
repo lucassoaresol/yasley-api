@@ -2,6 +2,9 @@ import 'express-async-errors'
 import express from 'express'
 import { errorHandler } from './errors'
 import {
+  categoryRouter,
+  clientRouter,
+  costRouter,
   imageRouter,
   passwordRouter,
   sessionRouter,
@@ -22,6 +25,9 @@ app.use((req, res, next) => {
 })
 
 app.use('/users', userRouter)
+app.use('/categories', categoryRouter)
+app.use('/clients', clientRouter)
+app.use('/costs', costRouter)
 app.use('/login', sessionRouter)
 app.use('/token', tokenRouter)
 app.use('/password', passwordRouter)

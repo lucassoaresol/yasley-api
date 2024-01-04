@@ -1,3 +1,6 @@
 export * from './auth.controllers'
+export * from './categories.controllers'
+export * from './clients.controllers'
+export * from './costs.controllers'
 export * from './images.controllers'
 export * from './users.controllers'

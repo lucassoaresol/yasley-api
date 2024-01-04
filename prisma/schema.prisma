@@ -11,56 +11,83 @@ datasource db {
 }
 
 model User {
-  id              String       @id @default(uuid())
-  name            String       @db.VarChar(254)
-  email           String?      @db.VarChar(254)
-  login           String       @unique @db.VarChar(128)
-  password        String       @db.VarChar(128)
-  cpf             String       @unique @db.VarChar(14)
-  is_super        Boolean      @default(false)
-  is_worker       Boolean      @default(false)
-  is_active       Boolean      @default(true)
-  is_first_access Boolean      @default(true)
-  created_at      DateTime     @default(now())
+  id              String   @id @default(uuid())
+  name            String   @db.VarChar(254)
+  email           String?  @db.VarChar(254)
+  login           String   @unique @db.VarChar(128)
+  password        String   @db.VarChar(128)
+  cpf             String   @unique @db.VarChar(14)
+  is_super        Boolean  @default(false)
+  is_worker       Boolean  @default(false)
+  is_active       Boolean  @default(true)
+  is_first_access Boolean  @default(true)
+  created_at      DateTime @default(now())
   profile         Image?
   token           Token?
-  modules         ModuleUser[]
+  costs           Cost[]
 
   @@map("users")
 }
 
+model Client {
+  id         String   @id @default(uuid())
+  name       String   @db.VarChar(200)
+  created_at DateTime @default(now())
+  jobs       Job[]
+
+  @@map("clients")
+}
+
+model Provider {
+  id         String   @id @default(uuid())
+  name       String   @db.VarChar(200)
+  created_at DateTime @default(now())
+  costs      Cost[]
+
+  @@map("providers")
+}
+
+model Job {
+  id         String    @id @default(uuid())
+  name       String    @db.VarChar(200)
+  address    String?   @db.VarChar(200)
+  start_date DateTime  @db.Date
+  end_date   DateTime? @db.Date
+  created_at DateTime  @default(now())
+  client     Client    @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  client_id  String
+  costs      Cost[]
+
+  @@map("jobs")
+}
+
 model Category {
-  id         String           @id @default(uuid())
-  name       String           @db.VarChar(200)
-  created_at DateTime         @default(now())
-  modules    ModuleCategory[]
+  id         String   @id @default(uuid())
+  name       String   @unique @db.VarChar(200)
+  created_at DateTime @default(now())
+  costs      Cost[]
 
   @@map("categories")
 }
 
-model Module {
-  id         String           @id @default(uuid())
-  name       String           @db.VarChar(200)
-  created_at DateTime         @default(now())
-  users      ModuleUser[]
-  categories ModuleCategory[]
+model Cost {
+  id          String    @id @default(uuid())
+  name        String    @db.VarChar(200)
+  value       Float     @default(0)
+  date        String    @db.VarChar(50)
+  date_time   DateTime  @db.Date
+  is_pending  Boolean   @default(true)
+  created_at  DateTime  @default(now())
+  category    Category  @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  category_id String
+  provider    Provider? @relation(fields: [provider_id], references: [id], onDelete: Cascade)
+  provider_id String?
+  job         Job?      @relation(fields: [job_id], references: [id], onDelete: Cascade)
+  job_id      String?
+  user        User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id     String
 
-  @@map("modules")
-}
-
-model Year {
-  id   String @id @default(uuid())
-  year String @unique @db.VarChar(10)
-
-  @@map("years")
-}
-
-model Month {
-  id    String @id @default(uuid())
-  name  String @unique @db.VarChar(30)
-  month Int    @unique @db.Integer
-
-  @@map("months")
+  @@map("costs")
 }
 
 model Image {
@@ -84,26 +111,4 @@ model Token {
   created_at DateTime @default(now())
 
   @@map("token")
-}
-
-model ModuleUser {
-  id         String   @id @default(uuid())
-  created_at DateTime @default(now())
-  module     Module   @relation(fields: [module_id], references: [id], onDelete: Cascade)
-  module_id  String
-  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  user_id    String
-
-  @@map("module_user")
-}
-
-model ModuleCategory {
-  id          String   @id @default(uuid())
-  created_at  DateTime @default(now())
-  module      Module   @relation(fields: [module_id], references: [id], onDelete: Cascade)
-  module_id   String
-  category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
-  category_id String
-
-  @@map("module_category")
 }

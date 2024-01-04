@@ -1,2 +1,6 @@
 export * from './auth.schema'
+export * from './category.schema'
+export * from './client.schema'
+export * from './cost.schema'
+export * from './provider.schema'
 export * from './user.schema'
